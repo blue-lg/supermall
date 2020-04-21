@@ -3,7 +3,7 @@
     <nav-bar>
       <div class="goBack" @click="goback" slot="left"><img src="~assets/images/common/back.svg"
           alt=""></div>
-      <div slot="conent" class="titelBox">
+      <div slot="conent"  class="titelBox">
         <span class="title" :class="{active:index===activeIndex}" v-for="(item,index) in title"
           @click="activeItem(index)" :key="index">{{item}}
         </span>
@@ -28,6 +28,7 @@ export default {
     },
     activeItem (index) {
       this.activeIndex = index
+      this.$emit('activeItem', index)
     }
   },
   components: {

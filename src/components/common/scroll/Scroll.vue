@@ -46,7 +46,9 @@ export default {
     scrollTo (x, y, time = 300) {
       this.scroll && this.scroll.scrollTo(x, y, time)
     },
+    // 重新计算可滚动的高度
     refresh () {
+      // console.log(111)
       this.scroll && this.scroll.refresh()
     }
   }

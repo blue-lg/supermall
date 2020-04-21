@@ -1,11 +1,11 @@
 <template>
   <div class="goodItem" @click="togoodInfo">
-    <img :src="gooditem.show.img" alt="">
+    <img :src="showimg" alt="" @load="imgLoad">
     <div class="goodItem_foot">
       <p class="title">{{gooditem.title}}</p>
       <span class="prim">{{gooditem.price}}</span>
       <span class="icon">
-        <img src="~assets/images/common/collect.svg" alt="" @load="imgLoad">
+        <img src="~assets/images/common/collect.svg" alt="">
       </span>
       <span class="collpace">{{gooditem.cfav}}</span>
     </div>
@@ -32,6 +32,11 @@ export default {
     },
     togoodInfo () {
       this.$router.push('/goodInfo/' + this.gooditem.iid)
+    }
+  },
+  computed: {
+    showimg () {
+      return this.gooditem.image || this.gooditem.show.img
     }
   }
 }

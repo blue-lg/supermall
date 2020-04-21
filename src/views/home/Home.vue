@@ -10,7 +10,7 @@
 
     <scroll class="content" ref="backtop" :probeType="3" @scroll="scrollConent" :pullUpLoad="true">
       <!-- 轮播图区域 -->
-      <my-carousel :banners="banners" @swipeImgLoad="swipeImgLoad"></my-carousel>
+      <my-carousel :banners="banners" :name="'home'" @swipeImgLoad="swipeImgLoad"></my-carousel>
       <!-- 分类区域 -->
       <my-remcomment :recommends="recommends"></my-remcomment>
       <!-- 本周流行 -->
@@ -51,8 +51,6 @@ export default {
       // 轮播图数据
       banners: [],
       recommends: [],
-      keywords: [],
-      dKeywords: [],
       // 首页商品所有数据
       goodList: {
         pop: { pages: 0, list: [] },
@@ -80,6 +78,9 @@ export default {
       refresh()
     })
   },
+  activated () {
+    this.$refs.backtop.refresh()
+  },
   methods: {
     // 获取首页轮播图与其他数据
     getHomeMultidata () {
@@ -87,8 +88,6 @@ export default {
         // this.result = res.data
         this.banners = res.data.banner.list
         this.recommends = res.data.recommend.list
-        this.keywords = res.data.keywords.list
-        this.dKeywords = res.data.dKeyword.list
       }).catch(err => err)
     },
     // 根据type和pages获取首页商品所有数据
@@ -122,7 +121,7 @@ export default {
     scrollConent (position) {
       this.showBackTop = Math.abs(position.y) > 1000
       this.tabConIsFlex = Math.abs(position.y) >= this.tabControlRefoffsetTop
-      console.log(this.tabConIsFlex)
+      // console.log(this.tabConIsFlex)
     },
     // 防止事件调用过于频繁使用防抖动函数进行处理
     debounce (fn, wait) {
@@ -137,7 +136,7 @@ export default {
     // 轮播图组件传过来的事件  监听轮播图图片加载完毕时触发
     swipeImgLoad () {
       this.tabControlRefoffsetTop = this.$refs.tabControlRef.$el.offsetTop
-      console.log(this.tabControlRefoffsetTop)
+      // console.log(this.tabControlRefoffsetTop)
     }
   },
   components: {
@@ -171,7 +170,7 @@ export default {
   left: 0;
   right: 0;
   top: 0;
-  z-index: 999;
+  z-index: 9;
 }
 
 .tabcontol {
@@ -182,7 +181,7 @@ export default {
   top: 44px;
   left: 0;right: 0; */
   position: relative;
-  z-index: 99;
+  z-index: 9;
 }
 /* .content {
   height: calc(100% - 92px);
