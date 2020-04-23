@@ -9,8 +9,8 @@
       <cart-list></cart-list>
     </scroll>
     <!-- 提交区域 -->
-    <van-submit-bar :price="3050" button-text="提交订单" >
-      <van-checkbox v-model='allCheck' @click="allCheckClick" checked-color="#EE8EA1">全选</van-checkbox>
+    <van-submit-bar :price="totalPrice" :button-text="'提交订单'+'('+checkLeng+')'" >
+      <van-checkbox v-model='allCheckto' @click="allClick" checked-color="#EE8EA1">{{allCheckto?'反选':'全选'}}</van-checkbox>
     </van-submit-bar>
   </div>
 </template>
@@ -21,22 +21,38 @@ import Scroll from '../../components/common/scroll/Scroll'
 
 import CartList from './childrenComps/CartList'
 
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapState } from 'vuex'
 export default {
   data () {
-    return {}
+    return {
+    }
   },
   created () {
-    console.log(this.allCheck)
   },
   methods: {
     ...mapMutations(['editAllCheck']),
-    allCheckClick () {
+    allClick () {
+      this.editAllCheck(this.allCheckto)
     }
 
   },
   computed: {
-    ...mapGetters(['goodsLength', 'allCheck'])
+    ...mapGetters(['goodsLength', 'totalPrice', 'checkLeng', 'goodsList', 'allCheck']),
+    ...mapState(['allCheckStatus']),
+    // 判断商品是否全部选中
+    allCheckto: {
+      get () {
+        if (this.goodsList.length === 0) return false
+        // const a = this.goodsList.filter(item => item.check !== false)
+        // // eslint-disable-next-line no-undef
+        // if (a.length === this.goodsList.length) {
+        //   return true
+        // }
+        // return false
+        return !(this.goodsList.find(item => !item.check))
+      },
+      set () { return true }
+    }
   },
   components: {
     'cart-navbar': Navbar,
@@ -67,5 +83,8 @@ export default {
   right: 0;
   bottom: 6px;
   background-color: #eee;
+}
+.van-submit-bar__button--danger{
+  background-color:#EE8EA1 ;
 }
 </style>

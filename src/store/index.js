@@ -10,7 +10,8 @@ const goodsList = JSON.parse(sessionStorage.getItem('goodcar') || '[]')
 
 // 将vuex的状态抽离出去 方便以后管理
 const state = {
-  goodsList
+  goodsList,
+  allCheckStatus: false
 }
 
 export default new Vuex.Store({

@@ -101,6 +101,8 @@ import Carousel from 'components/common/swipe/carousel'
 import Scroll from 'components/common/scroll/Scroll'
 
 import { mapMutations, mapActions } from 'vuex'
+
+import { Toast } from 'vant'
 export default {
   data () {
     return {
@@ -208,8 +210,11 @@ export default {
       goods.iid = this.iid
       goods.check = true
       goods.count = 1
-      console.log(goods)
-      this.addgoodTocard(goods)
+      this.addgoodTocard(goods).then(res => {
+        Toast.success(res)
+      }).catch(res => {
+        Toast.fail(res)
+      })
     }
   },
   components: {
